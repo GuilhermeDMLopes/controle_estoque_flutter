@@ -1,4 +1,5 @@
 
+import 'package:controle_estoque_c317_flutter/telas/TelaLogin.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaPrincipal.dart';
 import 'package:flutter/material.dart';
 
@@ -24,11 +25,12 @@ class Cabecalho{
           icon: Icon(Icons.notification_add),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TelaLogin()));},
           icon: Icon(Icons.logout_sharp),
         ),
-      ],
-
+      ]
     );
   }
 }

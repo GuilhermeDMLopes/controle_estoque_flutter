@@ -4,6 +4,7 @@ import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaCorredor.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaFornecedor.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaHelp.dart';
+import 'package:controle_estoque_c317_flutter/telas/TelaLogin.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaProduto.dart';
 import 'package:flutter/material.dart';
 // 6AB633
