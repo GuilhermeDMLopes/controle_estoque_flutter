@@ -15,7 +15,7 @@ class TelaFornecedor extends StatefulWidget {
 class _TelaFornecedorState extends State<TelaFornecedor> {
 
   TextEditingController _tituloController = TextEditingController();
-  TextEditingController _descricaoController = TextEditingController();
+  TextEditingController _localController = TextEditingController();
   var _db = fornecedorDAO();
 
   List<Fornecedor> _fornecedores = <Fornecedor>[];
@@ -26,11 +26,11 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
 
     if( fornecedor == null){ //salvar
       _tituloController.text = "";
-      _descricaoController.text = "";
+      _localController.text = "";
       textoSalvarAtualizar = "Salvar";
     }else{ // atualizar
       _tituloController.text = fornecedor.titulo.toString();
-      _descricaoController.text = fornecedor.descricao.toString();
+      _localController.text = fornecedor.local.toString();
       textoSalvarAtualizar = "Atualizar";
     }
 
@@ -46,15 +46,15 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
                   controller: _tituloController,
                   autofocus: true,
                   decoration: InputDecoration(
-                      labelText: "Título",
-                      hintText: "Digite título..."
+                      labelText: "Nome Fornecedor",
+                      hintText: "Digite Forncedor nome..."
                   ),
                 ),
                 TextField(
-                  controller: _descricaoController,
+                  controller: _localController,
                   decoration: InputDecoration(
-                      labelText: "Descrição",
-                      hintText: "Digite descrição..."
+                      labelText: "Local do Fornecedor",
+                      hintText: "Digite local Fornecedor ..."
                   ),
                 )
               ],
@@ -103,17 +103,17 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
   _salvarAtulizarfornecedor( { Fornecedor? fornecedorSelecionada}) async {
 
     String titulo = _tituloController.text;
-    String descricao = _descricaoController.text;
+    String local = _localController.text;
 
     if( fornecedorSelecionada == null){ // salvar
       //print("data atual: " + DateTime.now().toString() );
-      Fornecedor fornecedor = Fornecedor(titulo, descricao, DateTime.now().toString() );
+      Fornecedor fornecedor = Fornecedor(titulo, local, DateTime.now().toString() );
       int resultado = await _db.salvarfornecedor( fornecedor );
       //print("salvar fornecedor: " + resultado.toString() );
 
     }else{ //atualizar
       fornecedorSelecionada.titulo = titulo;
-      fornecedorSelecionada.descricao = descricao;
+      fornecedorSelecionada.local = local;
       fornecedorSelecionada.data = DateTime.now().toString() ;
       int resultado = await _db.atualizarFornecedor(fornecedorSelecionada);
     }
@@ -121,7 +121,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
 
 
     _tituloController.clear();
-    _descricaoController.clear();
+    _localController.clear();
 
     _recuperarFornenedor();
 
@@ -178,7 +178,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
                     return Card(
                       child: ListTile(
                         title: Text( item.titulo.toString() ),
-                        subtitle:Text("${_formatarData(item.data.toString())} - ${item.descricao}") ,
+                        subtitle:Text("Local: ${item.local} - Data cadastro: ${_formatarData(item.data.toString())}") ,
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min ,
                           children: <Widget>[

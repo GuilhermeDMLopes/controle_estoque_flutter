@@ -36,17 +36,10 @@ class fornecedorDAO {
 
   _onCreate(Database db, int version) async {
 
-    /*
-
-    id titulo descricao data
-    01 teste  teste     02/10/2020
-
-    * */
-
     String sql = "CREATE TABLE $nomeTabela ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "titulo VARCHAR, "
-        "descricao TEXT, "
+        "local TEXT, "
         "data DATETIME)";
     await db.execute(sql);
 
@@ -55,7 +48,7 @@ class fornecedorDAO {
   inicializarDB() async {
 
     final caminhoBancoDados = await getDatabasesPath();
-    final localBancoDados = join(caminhoBancoDados, "banco_fornecedor.db");
+    final localBancoDados = join(caminhoBancoDados, "banco_fornecedor_de_produto.db");
 
     var db = await openDatabase(localBancoDados, version: 1, onCreate: _onCreate );
     return db;
@@ -98,41 +91,3 @@ class fornecedorDAO {
   }
 
 }
-
-/*
-
-class Normal {
-
-  Normal(){
-
-  }
-
-}
-
-class Singleton {
-
-  static final Singleton _singleton = Singleton._internal();
-
-  	factory Singleton(){
-      print("Singleton");
-      return _singleton;
-    }
-
-    Singleton._internal(){
-    	print("_internal");
-  	}
-
-}
-
-void main() {
-
-  var i1 = Singleton();
-  print("***");
-  var i2 = Singleton();
-
-  print( i1 == i2 );
-
-}
-
-
-* */
