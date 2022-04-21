@@ -2,15 +2,15 @@
 class Fornecedor{
 
   int? id;
-  String? titulo;
+  String? nome_fornecedor;
   String? local;
   String? data;
 
-  Fornecedor(this.titulo, this.local, this.data);
+  Fornecedor(this.nome_fornecedor, this.local, this.data);
 
   Fornecedor.fromMap(Map map){
     this.id = map["id"];
-    this.titulo = map["titulo"];
+    this.nome_fornecedor = map["nome_fornecedor"];
     this.local = map["local"];
     this.data = map["data"];
 
@@ -19,7 +19,7 @@ class Fornecedor{
   Map toMap(){
 
     Map<String, dynamic> map = {
-      "titulo" : this.titulo,
+      "nome_fornecedor" : this.nome_fornecedor,
       "local" : this.local,
       "data" : this.data,
     };

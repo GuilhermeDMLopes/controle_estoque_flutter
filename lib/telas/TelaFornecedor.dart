@@ -14,9 +14,9 @@ class TelaFornecedor extends StatefulWidget {
 
 class _TelaFornecedorState extends State<TelaFornecedor> {
 
-  TextEditingController _tituloController = TextEditingController();
+  TextEditingController _nome_fornecedorController = TextEditingController();
   TextEditingController _localController = TextEditingController();
-  var _db = fornecedorDAO();
+  var _db = FornecedorDAO();
 
   List<Fornecedor> _fornecedores = <Fornecedor>[];
 
@@ -25,11 +25,11 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
     String textoSalvarAtualizar = "";
 
     if( fornecedor == null){ //salvar
-      _tituloController.text = "";
+      _nome_fornecedorController.text = "";
       _localController.text = "";
       textoSalvarAtualizar = "Salvar";
     }else{ // atualizar
-      _tituloController.text = fornecedor.titulo.toString();
+      _nome_fornecedorController.text = fornecedor.nome_fornecedor.toString();
       _localController.text = fornecedor.local.toString();
       textoSalvarAtualizar = "Atualizar";
     }
@@ -43,11 +43,11 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 TextField(
-                  controller: _tituloController,
+                  controller: _nome_fornecedorController,
                   autofocus: true,
                   decoration: InputDecoration(
                       labelText: "Nome Fornecedor",
-                      hintText: "Digite Forncedor nome..."
+                      hintText: "Digite Fornecedor nome..."
                   ),
                 ),
                 TextField(
@@ -102,25 +102,23 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
 
   _salvarAtulizarfornecedor( { Fornecedor? fornecedorSelecionada}) async {
 
-    String titulo = _tituloController.text;
+    String nome_fornecedor = _nome_fornecedorController.text;
     String local = _localController.text;
 
     if( fornecedorSelecionada == null){ // salvar
       //print("data atual: " + DateTime.now().toString() );
-      Fornecedor fornecedor = Fornecedor(titulo, local, DateTime.now().toString() );
+      Fornecedor fornecedor = Fornecedor(nome_fornecedor, local, DateTime.now().toString() );
       int resultado = await _db.salvarfornecedor( fornecedor );
       //print("salvar fornecedor: " + resultado.toString() );
 
     }else{ //atualizar
-      fornecedorSelecionada.titulo = titulo;
+      fornecedorSelecionada.nome_fornecedor = nome_fornecedor;
       fornecedorSelecionada.local = local;
       fornecedorSelecionada.data = DateTime.now().toString() ;
       int resultado = await _db.atualizarFornecedor(fornecedorSelecionada);
     }
 
-
-
-    _tituloController.clear();
+    _nome_fornecedorController.clear();
     _localController.clear();
 
     _recuperarFornenedor();
@@ -157,8 +155,6 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -177,7 +173,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
 
                     return Card(
                       child: ListTile(
-                        title: Text( item.titulo.toString() ),
+                        title: Text( item.nome_fornecedor.toString() ),
                         subtitle:Text("Local: ${item.local} - Data cadastro: ${_formatarData(item.data.toString())}") ,
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min ,
