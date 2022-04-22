@@ -1,5 +1,7 @@
 
 import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
+import 'package:controle_estoque_c317_flutter/DAO/DatabaseHelper.dart';
+import 'package:controle_estoque_c317_flutter/model/Produto.dart';
 import 'package:flutter/material.dart';
 
 class TelaHelp extends StatefulWidget {
@@ -10,11 +12,37 @@ class TelaHelp extends StatefulWidget {
 }
 
 class _TelaHelpState extends State<TelaHelp> {
+
+  var _quantidade = 0;
+  var _db = DatabaseHelper();
+
+  _recuperarProdutoAcabando() async {
+
+    _quantidade = 0;
+    List produtoRecuperadas = await _db.recuperarproduto();
+
+    var x;
+    for( var item in produtoRecuperadas){
+      Produto produto = Produto.fromMap(item);
+      x = int.parse(produto.quantidade.toString());
+      if(x<50){
+        setState(() {
+          _quantidade = _quantidade+1;
+        });
+      }
+    }
+  }
+  @override
+  void initState(){
+    _recuperarProdutoAcabando();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: Cabecalho.cabecalho("Contato",context),
+      appBar: Cabecalho.cabecalho("Help",context,_quantidade),
       body: SingleChildScrollView( // para ter a opcao de rolagem no app
         child: Container(
           padding: EdgeInsets.all(16),

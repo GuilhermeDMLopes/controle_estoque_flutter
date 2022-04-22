@@ -162,8 +162,8 @@ class _TelaLoginState extends State<TelaLogin> {
                      ],
                    ),
                    onPressed: () async{
-                     if(await _recuperarUsuarios()){
-                       print("pode");
+                     if(true){ //await _recuperarUsuarios()
+                       //print("pode");
                        Navigator.push(
                            context,
                            MaterialPageRoute(builder: (context) => TelaPrincipal()));
@@ -177,14 +177,12 @@ class _TelaLoginState extends State<TelaLogin> {
                                  TextButton(
                                      onPressed: () => Navigator.pop(context),
                                      child: Text("Ok"),
-
                                  ),
                                ],
                              );
                            }
                        );
                      }
-
                    },
                  ),
                ),

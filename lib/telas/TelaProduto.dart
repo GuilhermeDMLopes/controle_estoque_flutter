@@ -16,6 +16,7 @@ class _TelaProdutoState extends State<TelaProduto> {
 
   TextEditingController _nome_produtoController = TextEditingController();
   TextEditingController _quantidadeController = TextEditingController();
+  var _quantidade = 0;
   var _db = DatabaseHelper();
 
   List<Produto> _produtos = <Produto>[];
@@ -100,6 +101,22 @@ class _TelaProdutoState extends State<TelaProduto> {
     });
     listaTemporaria = null;
   }
+  _recuperarProdutoAcabando() async {
+
+    _quantidade = 0;
+    List produtoRecuperadas = await _db.recuperarproduto();
+
+    var x;
+    for( var item in produtoRecuperadas){
+      Produto produto = Produto.fromMap(item);
+      x = int.parse(produto.quantidade.toString());
+      if(x<50){
+        setState(() {
+          _quantidade = _quantidade+1;
+        });
+      }
+    }
+  }
 
   _salvarAtulizarproduto( { Produto? produtoSelecionada}) async {
 
@@ -110,6 +127,7 @@ class _TelaProdutoState extends State<TelaProduto> {
       //print("data atual: " + DateTime.now().toString() );
       Produto produto = Produto(nome_produto, quantidade, DateTime.now().toString() );
       int resultado = await _db.salvarProduto( produto );
+      _recuperarProdutoAcabando();
       //print("salvar produto: " + resultado.toString() );
 
     }else{ //atualizar
@@ -117,6 +135,7 @@ class _TelaProdutoState extends State<TelaProduto> {
       produtoSelecionada.quantidade = quantidade;
       produtoSelecionada.data = DateTime.now().toString() ;
       int resultado = await _db.atualizarproduto(produtoSelecionada);
+      _recuperarProdutoAcabando();
     }
 
     _nome_produtoController.clear();
@@ -151,7 +170,7 @@ class _TelaProdutoState extends State<TelaProduto> {
 
   @override
   void initState(){
-    //_db.inicializarDBProduto();
+    _recuperarProdutoAcabando();
     _recuperarProduto();
     super.initState();
   }
@@ -162,7 +181,7 @@ class _TelaProdutoState extends State<TelaProduto> {
     _recuperarProduto();
 
     return Scaffold(
-      appBar: Cabecalho.cabecalho("Produtos",context),
+      appBar: Cabecalho.cabecalho("Produtos",context, _quantidade),
       body: Column(
         children: <Widget>[
           Expanded(

@@ -1,6 +1,8 @@
 
 
 import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
+import 'package:controle_estoque_c317_flutter/DAO/DatabaseHelper.dart';
+import 'package:controle_estoque_c317_flutter/model/Produto.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaHelp.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaFornecedor.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaContato.dart';
@@ -10,14 +12,15 @@ import 'package:controle_estoque_c317_flutter/telas/TelaProduto.dart';
 import 'package:flutter/material.dart';
 // 6AB633
 class TelaPrincipal extends StatefulWidget {
-  const TelaPrincipal({Key? key}) : super(key: key);
+  const TelaPrincipal( {Key? key}) : super(key: key);
 
   @override
   State<TelaPrincipal> createState() => _TelaPrincipalState();
 }
 
 class _TelaPrincipalState extends State<TelaPrincipal> {
-
+  var _quantidade = 0;
+  var _db = DatabaseHelper();
   void _abrirProduto(){
     Navigator.push(
         context,
@@ -41,11 +44,27 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         context,
         MaterialPageRoute(builder: (context) => TelaHelp()));
   }
+  _recuperarProdutoAcabando() async {
+
+    _quantidade = 0;
+    List produtoRecuperadas = await _db.recuperarproduto();
+
+    var x;
+    for( var item in produtoRecuperadas){
+      Produto produto = Produto.fromMap(item);
+      x = int.parse(produto.quantidade.toString());
+      if(x<50){
+        setState(() {
+          _quantidade = _quantidade+1;
+        });
+      }
+    }
+  }
 
   @override
   void initState(){
 //    FactoryConnection.inicializarDB();
-
+    _recuperarProdutoAcabando();
     super.initState();
   }
 
@@ -54,7 +73,7 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: Cabecalho.cabecalho("Controle de estoque",context),
+        appBar: Cabecalho.cabecalho("Controle de estoque",context,_quantidade),
         body: Container(
           padding: EdgeInsets.all(10),
           child: Column(

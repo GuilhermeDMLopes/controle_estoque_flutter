@@ -1,13 +1,17 @@
 
+import 'package:controle_estoque_c317_flutter/DAO/DatabaseHelper.dart';
+import 'package:controle_estoque_c317_flutter/model/Produto.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaLogin.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaPrincipal.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 
-class Cabecalho{
+class Cabecalho {
 
-  static AppBar cabecalho(String testo, BuildContext context){
+  static AppBar cabecalho(String testo, BuildContext context,int acabando)  {
 
     return AppBar(
+      toolbarHeight: 60,
       backgroundColor: Colors.green,
       centerTitle: true,
       title: Text(testo),
@@ -20,9 +24,18 @@ class Cabecalho{
         icon: Icon(Icons.home),
       ),
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.notification_add),
+        Badge(
+          toAnimate: true,
+          animationType: BadgeAnimationType.scale,
+          // ignore: argument_type_not_assignable
+
+          badgeContent: Text("$acabando"), //Text(await _recuperarProduto, style: TextStyle(color: Colors.white)),
+          child: IconButton(
+            icon: Icon(Icons.notification_add),
+            onPressed: () {},
+          ),
+          position: BadgePosition.topEnd(top: 12, end: 4),
+
         ),
         IconButton(
           icon: Icon(Icons.logout_sharp),

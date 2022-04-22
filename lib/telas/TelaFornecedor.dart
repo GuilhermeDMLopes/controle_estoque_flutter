@@ -2,6 +2,7 @@ import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
 import 'package:controle_estoque_c317_flutter/DAO/DatabaseHelper.dart';
 //import 'package:controle_estoque_c317_flutter/DAO/FornecedorDAO.dart';
 import 'package:controle_estoque_c317_flutter/model/Fornecedor.dart';
+import 'package:controle_estoque_c317_flutter/model/Produto.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -18,6 +19,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
   TextEditingController _nome_fornecedorController = TextEditingController();
   TextEditingController _localController = TextEditingController();
   var _db = DatabaseHelper();
+  var _quantidade = 0;
 
   List<Fornecedor> _fornecedores = <Fornecedor>[];
 
@@ -101,6 +103,23 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
     listaTemporaria = null;
   }
 
+  _recuperarProdutoAcabando() async {
+
+    _quantidade = 0;
+    List produtoRecuperadas = await _db.recuperarproduto();
+
+    var x;
+    for( var item in produtoRecuperadas){
+      Produto produto = Produto.fromMap(item);
+      x = int.parse(produto.quantidade.toString());
+      if(x<50){
+        setState(() {
+          _quantidade = _quantidade+1;
+        });
+      }
+    }
+  }
+
   _salvarAtulizarfornecedor( { Fornecedor? fornecedorSelecionada}) async {
 
     String nome_fornecedor = _nome_fornecedorController.text;
@@ -152,6 +171,8 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
   @override
   void initState(){
     //_db.inicializarDB();
+
+    _recuperarProdutoAcabando();
     _recuperarFornenedor();
     super.initState();
   }
@@ -162,7 +183,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
     _recuperarFornenedor();
 
     return Scaffold(
-      appBar: Cabecalho.cabecalho("Fornecedores",context),
+      appBar: Cabecalho.cabecalho("Fornecedores",context,_quantidade),
       body: Column(
         children: <Widget>[
           Expanded(
