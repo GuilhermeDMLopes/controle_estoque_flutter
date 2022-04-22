@@ -1,8 +1,9 @@
 import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
-import 'package:controle_estoque_c317_flutter/DAO/ProdutoDAO.dart';
+//import 'package:controle_estoque_c317_flutter/DAO/ProdutoDAO.dart';
 import 'package:controle_estoque_c317_flutter/model/Produto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:controle_estoque_c317_flutter/DAO/DatabaseHelper.dart';
 
 import 'package:intl/intl.dart';
 
@@ -15,7 +16,7 @@ class _TelaProdutoState extends State<TelaProduto> {
 
   TextEditingController _nome_produtoController = TextEditingController();
   TextEditingController _quantidadeController = TextEditingController();
-  var _db = ProdutoDAO();
+  var _db = DatabaseHelper();
 
   List<Produto> _produtos = <Produto>[];
 
@@ -152,7 +153,7 @@ class _TelaProdutoState extends State<TelaProduto> {
 
   @override
   void initState(){
-    _db.inicializarDBProduto();
+    //_db.inicializarDBProduto();
     _recuperarProduto();
     super.initState();
   }
@@ -163,7 +164,7 @@ class _TelaProdutoState extends State<TelaProduto> {
     _recuperarProduto();
 
     return Scaffold(
-      appBar: Cabecalho.cabecalho("produto",context),
+      appBar: Cabecalho.cabecalho("Produtos",context),
       body: Column(
         children: <Widget>[
           Expanded(

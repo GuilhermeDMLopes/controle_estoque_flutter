@@ -78,6 +78,8 @@ flutter:
       - images/fornecedor.png
       - images/corredor.png
       - images/ajuda.png
+      - images/contatos.png
+      - images/detalhe_help.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

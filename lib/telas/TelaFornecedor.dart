@@ -1,5 +1,6 @@
 import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
-import 'package:controle_estoque_c317_flutter/DAO/FornecedorDAO.dart';
+import 'package:controle_estoque_c317_flutter/DAO/DatabaseHelper.dart';
+//import 'package:controle_estoque_c317_flutter/DAO/FornecedorDAO.dart';
 import 'package:controle_estoque_c317_flutter/model/Fornecedor.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
 
   TextEditingController _nome_fornecedorController = TextEditingController();
   TextEditingController _localController = TextEditingController();
-  var _db = FornecedorDAO();
+  var _db = DatabaseHelper();
 
   List<Fornecedor> _fornecedores = <Fornecedor>[];
 
@@ -161,7 +162,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
     _recuperarFornenedor();
 
     return Scaffold(
-      appBar: Cabecalho.cabecalho("Fornecedor",context),
+      appBar: Cabecalho.cabecalho("Fornecedores",context),
       body: Column(
         children: <Widget>[
           Expanded(

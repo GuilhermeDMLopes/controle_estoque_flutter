@@ -25,10 +25,32 @@ class Cabecalho{
           icon: Icon(Icons.notification_add),
         ),
         IconButton(
-          onPressed: () {Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TelaLogin()));},
           icon: Icon(Icons.logout_sharp),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text("Deseja mesmo Deslogar?"),
+                    actions: <Widget>[
+                      TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text("Nao")
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TelaLogin()));
+                          },
+                          child: Text("Sim")
+                      )
+                    ],
+                  );
+                }
+            );
+          }
         ),
       ]
     );

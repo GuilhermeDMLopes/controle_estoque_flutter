@@ -1,10 +1,11 @@
 
 
 import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
-import 'package:controle_estoque_c317_flutter/telas/TelaCorredor.dart';
-import 'package:controle_estoque_c317_flutter/telas/TelaFornecedor.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaHelp.dart';
-import 'package:controle_estoque_c317_flutter/telas/TelaLogin.dart';
+import 'package:controle_estoque_c317_flutter/telas/TelaFornecedor.dart';
+import 'package:controle_estoque_c317_flutter/telas/TelaContato.dart';
+//import 'package:controle_estoque_c317_flutter/telas/TelaLogin.dart';
+//import 'package:controle_estoque_c317_flutter/factory/FactoryConnection.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaProduto.dart';
 import 'package:flutter/material.dart';
 // 6AB633
@@ -29,16 +30,23 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
         MaterialPageRoute(builder: (context) => TelaFornecedor()));
   }
 
-  void _abrirCorredor(){
+  void _abrirContato(){
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => TelaCorredor()));
+        MaterialPageRoute(builder: (context) => TelaContato()));
   }
 
   void _abrirAjuda(){
     Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => TelaHelp()));
+  }
+
+  @override
+  void initState(){
+//    FactoryConnection.inicializarDB();
+
+    super.initState();
   }
 
   @override
@@ -55,7 +63,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
             children: <Widget> [
               Image(image: AssetImage(""
                   "images/logo.png",
-
               )),
               Padding(
                 padding: EdgeInsets.only(top:32),
@@ -87,17 +94,17 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly, // alinhar a linha
                   children: <Widget>[
                     GestureDetector(
-                      onTap: _abrirCorredor , // ao clicar na imagem
+                      onTap: _abrirAjuda , // ao clicar na imagem
                       child: Image.asset(
-                          "images/corredor.png",
+                          "images/ajuda.png",
                           width: 140,
                           height: 140,
                       ),
                     ),
                     GestureDetector(
-                      onTap: _abrirAjuda , // ao clicar na imagem
+                      onTap: _abrirContato, // ao clicar na imagem
                       child: Image.asset(
-                          "images/ajuda.png",
+                          "images/contatos.png",
                           width: 140,
                           height: 140,
                       ),
@@ -109,40 +116,6 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
           ),
         )
 
-
-
-
-
-
-
-
-
-
-
-      // Column(
-      //   crossAxisAlignment: CrossAxisAlignment.center,
-      //   children: <Widget>[
-      //     Padding(
-      //         padding: EdgeInsets.only(left: 200 , right: 200, top: 80)
-      //     ),
-      //     Image(image: AssetImage("images/logo.png")),
-
-      //     Row(
-      //       crossAxisAlignment: CrossAxisAlignment.center,
-      //       children: [
-      //         Padding(
-      //             padding: EdgeInsets.only(left: 70,top: 160)
-      //         ),
-      //         Image(image: AssetImage("images/menu_cliente.png")),
-      //
-      //         Padding(
-      //             padding: EdgeInsets.only(left: 40, top: 140)
-      //         ),
-      //         Image(image: AssetImage("images/menu_contato.png")),
-      //       ],
-      //     )
-      //   ],
-      // )
     );
   }
 }
