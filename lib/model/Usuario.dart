@@ -17,8 +17,7 @@ class Usuario{
 
     Map<String, dynamic> map = {
       "email_usuario" : this.email_usuario,
-      "local" : this.senha,
-      "data" : this.senha,
+      "senha" : this.senha,
     };
 
     if( this.id != null ){

@@ -35,7 +35,7 @@ class DatabaseHelper {
 
   _onCreateFornecedor(Database db, int version) async {
 
-    String sql = "CREATE TABLE $nomeTabelaFornecedor ("
+    String sql = "CREATE TABLE IF NOT EXISTS $nomeTabelaFornecedor ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "nome_fornecedor VARCHAR, "
         "local TEXT, "
@@ -43,17 +43,17 @@ class DatabaseHelper {
 
     await db.execute(sql);
 
-    sql = "CREATE TABLE $nomeTabelaFornecedor ("
+    sql = "CREATE TABLE IF NOT EXISTS $nomeTabelaProduto ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "nome_produto VARCHAR, "
         "quantidade VARCHAR, "
         "data DATETIME)";
     await db.execute(sql);
 
-    sql = "CREATE TABLE $nomeTabelaUsuario ("
+    sql = "CREATE TABLE IF NOT EXISTS $nomeTabelaUsuario ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-        "email VARCHAR, "
-        "senha VARCHAR, ";
+        "email_usuario VARCHAR, "
+        "senha VARCHAR) ";
 
     await db.execute(sql);
 
@@ -63,7 +63,7 @@ class DatabaseHelper {
 
     final caminhoBancoDados = await getDatabasesPath();
     print(caminhoBancoDados);
-    final localBancoDados = join(caminhoBancoDados, "banco_controle20.db");
+    final localBancoDados = join(caminhoBancoDados, "banco_controle23.db");
 
     var db = await openDatabase(localBancoDados, version: 1, onCreate: _onCreateFornecedor );
     return db;
@@ -144,6 +144,12 @@ class DatabaseHelper {
     int resultado = await bancoDados.insert(nomeTabelaUsuario, Usuario.toMap() );
     return resultado;
 
+  }
+  recuperarUsuario() async {
+    var bancoDados = await db;
+    String sql = "SELECT * FROM $nomeTabelaUsuario";
+    List usuario = await bancoDados.rawQuery(sql);
+    return usuario;
   }
 
 }

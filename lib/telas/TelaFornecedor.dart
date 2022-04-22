@@ -91,12 +91,12 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
     List<Fornecedor>? listaTemporaria = <Fornecedor>[];
 
     for( var item in fornecedorRecuperadas){
-    Fornecedor fornecedor = Fornecedor.fromMap(item);
-    listaTemporaria.add(fornecedor);
+      Fornecedor fornecedor = Fornecedor.fromMap(item);
+      listaTemporaria.add(fornecedor);
     }
 
     setState(() {
-    _fornecedores = listaTemporaria!;
+      _fornecedores = listaTemporaria!;
     });
     listaTemporaria = null;
   }
@@ -151,7 +151,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
 
   @override
   void initState(){
-    _db.inicializarDB();
+    //_db.inicializarDB();
     _recuperarFornenedor();
     super.initState();
   }

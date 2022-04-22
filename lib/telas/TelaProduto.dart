@@ -30,7 +30,6 @@ class _TelaProdutoState extends State<TelaProduto> {
       textoSalvarAtualizar = "Salvar";
     }else{ // atualizar
       _nome_produtoController.text = produto.nome_produto.toString();
-      print("ggggggggg" +produto.quantidade.toString());
       _quantidadeController.text = produto.quantidade.toString();
       textoSalvarAtualizar = "Atualizar";
     }
@@ -81,7 +80,6 @@ class _TelaProdutoState extends State<TelaProduto> {
           );
         }
     );
-
   }
 
   _recuperarProduto() async {
