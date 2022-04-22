@@ -41,7 +41,7 @@ class _TelaFornecedorState extends State<TelaFornecedor> {
         context: context,
         builder: (context){
           return AlertDialog(
-            title: Text("$textoSalvarAtualizar fornecedor"),
+            title: Text("$textoSalvarAtualizar Fornecedor"),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[

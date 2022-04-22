@@ -1,5 +1,8 @@
 import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
 //import 'package:controle_estoque_c317_flutter/DAO/ProdutoDAO.dart';
+
+import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'package:controle_estoque_c317_flutter/model/Produto.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -18,6 +21,14 @@ class _TelaProdutoState extends State<TelaProduto> {
   TextEditingController _quantidadeController = TextEditingController();
   var _quantidade = 0;
   var _db = DatabaseHelper();
+  String? _selectedValue = 'Escolha o Fornecedor';
+  List<String> items = [
+    'Escolha o Fornecedor',
+    'Item2',
+    'Item3',
+    'Item4',
+  ];
+
 
   List<Produto> _produtos = <Produto>[];
 
@@ -38,46 +49,85 @@ class _TelaProdutoState extends State<TelaProduto> {
     showDialog(
         context: context,
         builder: (context){
-          return AlertDialog(
-            title: Text("$textoSalvarAtualizar produto"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                TextField(
-                  keyboardType:TextInputType.text,
-                  controller: _nome_produtoController,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                      labelText: "Nome produto",
-                      hintText: "Digite produto nome..."
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState)
+              {
+                return AlertDialog(
+                  title: Text("$textoSalvarAtualizar Produto"),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      TextField(
+                        keyboardType: TextInputType.text,
+                        controller: _nome_produtoController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                            labelText: "Nome produto",
+                            hintText: "Digite produto nome..."
+                        ),
+                      ),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        controller: _quantidadeController,
+                        decoration: InputDecoration(
+                            labelText: "Quantidade do produto",
+                            hintText: "Digite quantidade produto ..."
+                        ),
+                      ),
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton2(
+                          hint: Text(
+                            '$_selectedValue',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Theme
+                                  .of(context)
+                                  .hintColor,
+                            ),
+                          ),
+                          items: items
+                              .map((item) =>
+                              DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ))
+                              .toList(),
+                          value: '$_selectedValue',
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedValue = value as String;
+                              print(_selectedValue);
+                            });
+                          },
+                          buttonHeight: 40,
+                          buttonWidth: 180,
+                          itemHeight: 40,
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                TextField(
-                  keyboardType:TextInputType.number,
-                  controller: _quantidadeController,
-                  decoration: InputDecoration(
-                      labelText: "quantidade do produto",
-                      hintText: "Digite quantidade produto ..."
-                  ),
-                )
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text("Cancelar")
-              ),
-              TextButton(
-                  onPressed: (){
+                  actions: <Widget>[
+                    TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Cancelar")
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          //salvar
+                          _salvarAtulizarproduto(produtoSelecionada: produto);
 
-                    //salvar
-                    _salvarAtulizarproduto(produtoSelecionada: produto);
-
-                    Navigator.pop(context);
-                  },
-                  child: Text(textoSalvarAtualizar)
-              )
-            ],
+                          Navigator.pop(context);
+                        },
+                        child: Text(textoSalvarAtualizar)
+                    )
+                  ],
+                );
+              },
           );
         }
     );

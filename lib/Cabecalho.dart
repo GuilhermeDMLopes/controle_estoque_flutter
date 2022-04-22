@@ -4,6 +4,7 @@ import 'package:controle_estoque_c317_flutter/model/Produto.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaLogin.dart';
 import 'package:controle_estoque_c317_flutter/telas/TelaPrincipal.dart';
 import 'package:badges/badges.dart';
+import 'package:controle_estoque_c317_flutter/telas/TelaProdutosAcabando.dart';
 import 'package:flutter/material.dart';
 
 class Cabecalho {
@@ -32,7 +33,9 @@ class Cabecalho {
           badgeContent: Text("$acabando"), //Text(await _recuperarProduto, style: TextStyle(color: Colors.white)),
           child: IconButton(
             icon: Icon(Icons.notification_add),
-            onPressed: () {},
+            onPressed: () {Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TelaProdutoAcabando()));},
           ),
           position: BadgePosition.topEnd(top: 12, end: 4),
 
