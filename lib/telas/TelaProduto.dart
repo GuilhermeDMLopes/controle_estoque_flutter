@@ -1,4 +1,5 @@
 import 'package:controle_estoque_c317_flutter/Cabecalho.dart';
+import 'package:controle_estoque_c317_flutter/model/Fornecedor.dart';
 //import 'package:controle_estoque_c317_flutter/DAO/ProdutoDAO.dart';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -22,13 +23,27 @@ class _TelaProdutoState extends State<TelaProduto> {
   var _quantidade = 0;
   var _db = DatabaseHelper();
   String? _selectedValue = 'Escolha o Fornecedor';
-  List<String> items = [
-    'Escolha o Fornecedor',
-    'Item2',
-    'Item3',
-    'Item4',
-  ];
+  List<String> items = ['Escolha o Fornecedor'];
+  List<String> _fornecedores = [];
+  _recuperarFornenedor() async {
 
+    //_fornecedores.clear();
+    List fornecedorRecuperadas = await _db.recuperarfornecedor();
+    //print("Lista fornecedores: " + fornecedorRecuperadas.toString());
+
+    List<String>? listaTemporaria = <String>[];
+
+    for( var item in fornecedorRecuperadas){
+      Fornecedor fornecedor = Fornecedor.fromMap(item);
+      items.add(fornecedor.nome_fornecedor.toString());
+    }
+    print(items);
+
+//    setState(() {
+//      items = listaTemporaria!;
+//    });
+    listaTemporaria = null;
+  }
 
   List<Produto> _produtos = <Produto>[];
 
@@ -164,6 +179,8 @@ class _TelaProdutoState extends State<TelaProduto> {
         setState(() {
           _quantidade = _quantidade+1;
         });
+        print(_quantidade);
+
       }
     }
   }
@@ -212,14 +229,15 @@ class _TelaProdutoState extends State<TelaProduto> {
   int quantidadeRemovida = await _db.removerproduto(id!);
 
   if(quantidadeRemovida >0){
-  // remover algum
-  _recuperarProduto();
+    // remover algum
+    _recuperarProduto();
   }
 
   }
 
   @override
   void initState(){
+    _recuperarFornenedor();
     _recuperarProdutoAcabando();
     _recuperarProduto();
     super.initState();
