@@ -2,7 +2,7 @@ import 'package:controle_estoque_c317_flutter/model/Fornecedor.dart';
 import 'package:controle_estoque_c317_flutter/model/Produto.dart';
 import 'package:controle_estoque_c317_flutter/model/Usuario.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:test/test.dart';
+
 import 'package:controle_estoque_c317_flutter/DAO/DatabaseHelper.dart';
 
 void main()   {
