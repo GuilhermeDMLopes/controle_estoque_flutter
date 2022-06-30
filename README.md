@@ -1,3 +1,5 @@
+[![Dart](https://github.com/Rodrigodante11/controle_estoque_flutter/actions/workflows/dart.yml/badge.svg)](https://github.com/Rodrigodante11/controle_estoque_flutter/actions/workflows/dart.yml)
+
 # controle_estoque_c317_flutter
 
 A new Flutter application.
